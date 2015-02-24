@@ -23,7 +23,6 @@ function call_api($method, $url, $data = false)
     {
         case "POST":
             curl_setopt($curl, CURLOPT_POST, 1);
-
             if ($data)
                 curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
             break;
@@ -153,6 +152,23 @@ else if (startsWith( $endpoint, "geocode")) {
   }
 }
 
+else if (startsWith( $endpoint, "json")) {
+  
+  if ($method== "GET") {
+     if( isset( $_REQUEST['text'])) {
+       $text = $_REQUEST['text']; 
+         
+       $response_json = json_decode( $text);
+       $result = new stdClass();
+       $result->json = $response_json;       
+       $result_json = json_encode( $result, 128); //JSON_PRETTY_PRINT);
+       echo $result_json;
+     }
+     else {
+       die( "ERROR: Missing parameter 'text' for endpoint 'mirror'");    
+    }   
+  }
+}
 
 
 else {
