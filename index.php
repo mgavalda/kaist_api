@@ -170,6 +170,33 @@ else if (startsWith( $endpoint, "json")) {
   }
 }
 
+else if (startsWith( $endpoint, "hello")) {
+  
+  if ($method== "GET") {
+     if( isset( $_REQUEST['text'])) {
+       $text = $_REQUEST['text']; 
+         
+       //$time = time();
+       //$year = $time/31556926 % 12;
+       //$week = $time / 604800 % 52;
+       //$hour = $time / 3600 % 24;
+       //$minute = $time / 60 % 60;
+       //$second = $time % 60; 
+         
+       $result = new stdClass();
+       $result->id = time();
+       //$result->id = round( microtime( true) * 1000);
+       $result->content = "Hello " . $text;
+       $result_json = json_encode( $result, 128); //JSON_PRETTY_PRINT);
+       echo $result_json;
+     }
+     else {
+       die( "ERROR: Missing parameter 'text' for endpoint 'mirror'");    
+    }   
+  }
+}
+
+
 
 else {
   echo "Error: unknown endpoint \"$endpoint\".";
